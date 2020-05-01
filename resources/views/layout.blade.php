@@ -45,16 +45,20 @@
             width: 100%;
             overflow: hidden;
         }
+
+        .toggle-handle{
+            background: #4285f4 !important;
+        }
     </style>
 </head>
 <body style="height:100%; width:100%">
 <div id="header" class="blue-gradient p-1 text-left" >
     <div class="logo pt-2">
-        <span class="text-white pl-5">VFleet Flotta Menedzsment</span>
+        <span class="text-white pl-5" id="menu-title">VFleet Flotta Menedzsment</span>
     </div>
 </div>
-<div id="content" style="overflow-y: auto; top:0px; left: 0px; right: 0px; bottom: 50px; position: absolute">
-    <div class="card" >
+<div id="content" style="overflow-y: auto; top:0px; left: 0px; right: 0px; bottom: 50px; position: absolute;background-image: radial-gradient(circle, #ffffff, #f8f8fd, #f1f2fc, #e7ecfa, #dde7f9);">
+    <div class="card" style="height: 100%" >
 
         <h5 class="card-header blue-gradient white-text text-center py-4 mb-3">
             Flotta menedzsment egyszerűen
@@ -94,7 +98,7 @@ background-size: 80px; background-position-x: center">
                 </div>
 
                 <!-- Sign in button -->
-                <button class="btn blue-gradient  btn-block my-4 waves-effect z-depth-0" id="login" style="border-radius: 30px" type="submit">Bejelentkezés</button>
+                <button class="btn blue-gradient  btn-block my-4 waves-effect z-depth-0" id="login" style="border-radius: 30px" type="button">Bejelentkezés</button>
 
 
             </form>
@@ -106,13 +110,13 @@ background-size: 80px; background-position-x: center">
 </div>
 <div id="footer" class="blue-gradient p-1 text-center" style="display: none; position: absolute; bottom:0px; height: 50px; width: 100%; overflow: hidden">
     <p>
-    <button style="width: 23%; height: 100%; background: transparent!important; margin: 0px !important; padding: 0px!important;" class="btn btn-white"  >
+    <button style="width: 23%; height: 100%; background: transparent!important; margin: 0px !important; padding: 0px!important;" class="btn btn-white"  onclick="home()" >
         <i class="fas fa-home text-white" style="opacity: 0.5; font-size: 30px"></i>
     </button>
-        <button style="width: 25%; height: 100%; background: transparent!important; margin: 0px !important; padding: 0px!important;" class="btn btn-white"  >
+        <button style="width: 25%; height: 100%; background: transparent!important; margin: 0px !important; padding: 0px!important;" class="btn btn-white" onclick="fuel()" >
             <i class="fas fa-gas-pump text-white" style="opacity: 0.5; font-size: 30px"></i>
         </button>
-        <button style="width: 25%; height: 100%; background: transparent!important; margin: 0px !important; padding: 0px!important;" class="btn btn-white"  >
+        <button style="width: 25%; height: 100%; background: transparent!important; margin: 0px !important; padding: 0px!important;" class="btn btn-white" onclick="service()"  >
             <i class="fas fa-wrench text-white" style="opacity: 0.5; font-size: 30px"></i>
         </button>
         <button style="width: 23%; height: 100%; background: transparent!important; margin: 0px !important; padding: 0px!important;" class="btn btn-white"  >
@@ -133,27 +137,60 @@ background-size: 80px; background-position-x: center">
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <!-- Your custom scripts (optional) -->
 <script type="text/javascript">
+    function home(){
+        $.ajax({
+            url: "{{route('home.index')}}",
+            method: 'POST',
+            data: {
+                _token: "{{csrf_token()}}",
+            },
+            context: document.body
+        }).done(function (data) {
+            $('#content').html(data);
+            $('#content').css('top', '50px');
+            $('#menu-title').text('VFleet Flotta Menedzsment');
+            $('#footer').show();
+            $('#header').show();
+        });
+    }
+
+    function fuel(){
+        $.ajax({
+            url: "{{route('fuel.index')}}",
+            method: 'POST',
+            data: {
+                _token: "{{csrf_token()}}",
+            },
+            context: document.body
+        }).done(function (data) {
+            $('#content').html(data);
+            $('#content').css('top', '50px');
+            $('#menu-title').text('Tankolás');
+            $('#footer').show();
+            $('#header').show();
+        });
+    }
+
+    function service(){
+        $.ajax({
+            url: "{{route('service.index')}}",
+            method: 'POST',
+            data: {
+                _token: "{{csrf_token()}}",
+            },
+            context: document.body
+        }).done(function (data) {
+            $('#content').html(data);
+            $('#content').css('top', '50px');
+            $('#footer').show();
+            $('#header').show();
+            $('#menu-title').text('Szervízlap rörgzítése');
+        });
+    }
     $(document).ready(function() {
 
       $('#login').on("click", function () {
-
-          $.ajax({
-              url: "{{route('home.index')}}",
-              method: 'POST',
-              data: {
-                  _token: "{{csrf_token()}}",
-                  id: $(this).data('id'),
-                  eventtype: $(this).data('event'),
-                  checked: $(this).prop('checked')
-              },
-              context: document.body
-          }).done(function (data) {
-              $('#content').html(data);
-              $('#content').css('top', '50px');
-              $('#footer').show();
-              $('#header').show();
-          });
-
+            home();
       });
     });
 </script>

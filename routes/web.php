@@ -37,9 +37,9 @@ Route::get('/fuelcontent', function () {
     return view('fuelcontent');
 })->middleware('userauth')->name('fuelcontent');
 
-Route::post('/postfuel','UserController@postfuel')->middleware('userauth')->name('postfuel');
+Route::post('/postfuel', 'UserController@postfuel')->middleware('userauth')->name('postfuel');
 
-Route::post('/postservice','UserController@postservice')->middleware('userauth')->name('postservice');
+Route::post('/postservice', 'UserController@postservice')->middleware('userauth')->name('postservice');
 
 Route::get('/login', function () {
     return view('login');
@@ -48,12 +48,11 @@ Route::get('/login', function () {
 
 Route::post('postimage', function (Request $request) {
     $file = $request->file('img');
-    $ex = explode('.',$file->getClientOriginalName());
-
+    $ex = explode('.', $file->getClientOriginalName());
 
 
     //  $request->file('img')->store('');
-    $url =   Storage::disk('public')->putFile('', rename($request->file('img'), "bar.".$ex[count($ex)-1]));
+    $url = Storage::disk('public')->putFile('', rename($request->file('img'), "bar." . $ex[count($ex) - 1]));
 
 
 })->name('postimage');
@@ -67,16 +66,29 @@ Route::get('/logout', function (\Illuminate\Http\Request $r) {
     return view('login');
 })->name('logout');
 
-Route::post('allposts', 'UserController@allPosts' )->middleware('userauth')->name('allposts');
-Route::post('allpostsservice', 'UserController@allPostsService' )->middleware('userauth')->name('allpostsservice');
-Route::post('postchartdata', 'UserController@postchartdata' )->middleware('userauth')->name('postchartdata');
-Route::get('datatable', 'UserController@datatable' )->middleware('userauth')->name('datatable');
-Route::get('chart', 'UserController@chart' )->middleware('userauth')->name('chart');
+Route::post('allposts', 'UserController@allPosts')->middleware('userauth')->name('allposts');
+Route::post('allpostsservice', 'UserController@allPostsService')->middleware('userauth')->name('allpostsservice');
+Route::post('postchartdata', 'UserController@postchartdata')->middleware('userauth')->name('postchartdata');
+Route::get('datatable', 'UserController@datatable')->middleware('userauth')->name('datatable');
+Route::get('chart', 'UserController@chart')->middleware('userauth')->name('chart');
 Route::post('/auth', 'UserController@login')->name('login');
 
 
 Route::as('home.')
     ->prefix('home')
     ->group(function () {
-Route::post('/index', 'HomeController@index')->name('index');
-        });
+        Route::post('/index', 'HomeController@index')->name('index');
+    });
+
+
+Route::as('fuel.')
+    ->prefix('fuel')
+    ->group(function () {
+        Route::post('/index', 'FuelController@index')->name('index');
+    });
+
+Route::as('service.')
+    ->prefix('service')
+    ->group(function () {
+        Route::post('/index', 'ServiceController@index')->name('index');
+    });
