@@ -73,3 +73,10 @@ Route::post('postchartdata', 'UserController@postchartdata' )->middleware('usera
 Route::get('datatable', 'UserController@datatable' )->middleware('userauth')->name('datatable');
 Route::get('chart', 'UserController@chart' )->middleware('userauth')->name('chart');
 Route::post('/auth', 'UserController@login')->name('login');
+
+
+Route::as('home.')
+    ->prefix('home')
+    ->group(function () {
+Route::post('/index', 'HomeController@index')->name('index');
+        });

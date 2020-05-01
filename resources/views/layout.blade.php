@@ -1,159 +1,161 @@
-<html>
+
+<html lang="hu">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-   {{-- <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />--}}
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>VFleet</title>
+    <!-- MDB icon -->
+    <link rel="icon" href="{{asset('favicon.ico')}}" type="image/x-icon">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" href="{{asset('css/mdb.min.css')}}">
+    <!-- Your custom styles (optional) -->
+    <link rel="stylesheet" href="{{asset('css/style.css')}}">
 
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
-    <title>mcnc</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>
+        .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px; }
+        .toggle.ios .toggle-handle { border-radius: 20px; }
+        i.menu-icon{
+            position: absolute;
+            bottom: 8%;
+            right: 4%;
+            font-size: 600%;
+            opacity: 0.3;
+        }
+        div.logo{
+            height: 100%; width: auto;
+            background-size: contain;
+            background-image: url(images/vfleet.png);
+            background-repeat: no-repeat;
+        }
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-    {{--<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>--}}
-    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
-
-    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/7b0a1c503f.js" crossorigin="anonymous"></script>
-    <link href="{{asset('css/icheck-bootstrap.css')}}" rel="stylesheet">
-
-    <link rel="stylesheet" type="text/css" href="{{asset('css/DataTables/datatables.min.css')}}"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('css/spiner.css')}}"/>
-    <script type="text/javascript" src="{{asset('css/DataTables/datatables.min.js')}}"></script>
-
-    <script type="text/javascript" src="{{asset('js/Chart.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jquery.p2r.min.js')}}"></script>
+        #header{
+            display: none;
+            position: absolute;
+            top:0px;
+            height: 50px;
+            width: 100%;
+            overflow: hidden;
+        }
+    </style>
 </head>
 <body style="height:100%; width:100%">
-
-@yield('float')
-
-<div id="header" style="z-index: 9999; position:absolute; top:0px; left:0px; height:2.5rem; right:0px;overflow:hidden;">
-    <div class=" pr-2 pl-2 pt-2">
-    @yield('headerbar')
+<div id="header" class="blue-gradient p-1 text-left" >
+    <div class="logo pt-2">
+        <span class="text-white pl-5">VFleet Flotta Menedzsment</span>
     </div>
 </div>
+<div id="content" style="overflow-y: auto; top:0px; left: 0px; right: 0px; bottom: 50px; position: absolute">
+    <div class="card" >
+
+        <h5 class="card-header blue-gradient white-text text-center py-4 mb-3">
+            Flotta menedzsment egyszerűen
+        </h5>
+
+        <!--Card content-->
+        <div class="card-body px-lg-5" style="padding-top: 20%; background-image: url(images/vfleetdark.png); background-repeat: no-repeat;
+background-size: 80px; background-position-x: center">
+
+            <!-- Form -->
+            <form class="text-center" style="color: #757575;" action="#!">
+
+                <!-- Email -->
+                <div class="md-form">
+                    <input type="email" id="materialLoginFormEmail" class="form-control">
+                    <label for="materialLoginFormEmail">E-mail</label>
+                </div>
+
+                <!-- Password -->
+                <div class="md-form">
+                    <input type="password" id="materialLoginFormPassword" class="form-control">
+                    <label for="materialLoginFormPassword">Password</label>
+                </div>
+
+                <div class="d-flex ">
+                    <div>
+                        <!-- Remember me -->
+
+                        <input type="checkbox" data-on="Igen" data-off="Nem" data-onstyle="bg-white" data-size="small" data-offstyle="bg-white" data-toggle="toggle" data-style="ios">
+                        <label class="form-check-label" for="materialUnchecked">Jegyezz meg!</label>
+
+                    </div>
+                    <!-- <div>
+
+                        <a href="">Forgot password?</a>
+                    </div> -->
+                </div>
+
+                <!-- Sign in button -->
+                <button class="btn blue-gradient  btn-block my-4 waves-effect z-depth-0" id="login" style="border-radius: 30px" type="submit">Bejelentkezés</button>
 
 
+            </form>
+            <!-- Form -->
 
-
-
-<div id="content" class=" pr-2 pl-2" style="position:absolute; top:3rem; bottom:3rem; left:0px; right:0px; overflow:scroll; overflow-x: hidden">
-
-    @yield('content')
-    <div id="carouselExampleControls" class="carousel slide carousel-fade" data-ride="carousel" data-interval="false">
-        <div class="carousel-inner">
-            <div class="carousel-item active" data-attr="home">
-                @yield('homecontent')
-            </div>
-            <div class="carousel-item" data-attr="fuel">
-                @yield('fuelcontent')
-            </div>
-            <div class="carousel-item">
-                @yield('servicecontent')
-            </div>
         </div>
 
     </div>
 </div>
-<div id="footer" style="position:absolute; bottom:0px; height:3rem; left:0px; right:0px; overflow:hidden;">
-    <div class="row text-center pr-2 pl-2">
-        @yield('footerbar')
-
-    </div>
+<div id="footer" class="blue-gradient p-1 text-center" style="display: none; position: absolute; bottom:0px; height: 50px; width: 100%; overflow: hidden">
+    <p>
+    <button style="width: 23%; height: 100%; background: transparent!important; margin: 0px !important; padding: 0px!important;" class="btn btn-white"  >
+        <i class="fas fa-home text-white" style="opacity: 0.5; font-size: 30px"></i>
+    </button>
+        <button style="width: 25%; height: 100%; background: transparent!important; margin: 0px !important; padding: 0px!important;" class="btn btn-white"  >
+            <i class="fas fa-gas-pump text-white" style="opacity: 0.5; font-size: 30px"></i>
+        </button>
+        <button style="width: 25%; height: 100%; background: transparent!important; margin: 0px !important; padding: 0px!important;" class="btn btn-white"  >
+            <i class="fas fa-wrench text-white" style="opacity: 0.5; font-size: 30px"></i>
+        </button>
+        <button style="width: 23%; height: 100%; background: transparent!important; margin: 0px !important; padding: 0px!important;" class="btn btn-white"  >
+            <i class="fas fa-user text-white" style="opacity: 0.5; font-size: 30px"></i>
+        </button>
+    </p>
 </div>
-@yield('jsscript')
 
+<!-- jQuery -->
+<script type="text/javascript" src="{{asset('js/jquery.min.js')}}"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="{{asset('js/popper.min.js')}}"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="{{asset('js/bootstrap.min.js')}}"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="{{asset('js/mdb.min.js')}}"></script>
 
-<script>
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<!-- Your custom scripts (optional) -->
+<script type="text/javascript">
+    $(document).ready(function() {
 
+      $('#login').on("click", function () {
 
-    function caclFuelPrice()
-    {
+          $.ajax({
+              url: "{{route('home.index')}}",
+              method: 'POST',
+              data: {
+                  _token: "{{csrf_token()}}",
+                  id: $(this).data('id'),
+                  eventtype: $(this).data('event'),
+                  checked: $(this).prop('checked')
+              },
+              context: document.body
+          }).done(function (data) {
+              $('#content').html(data);
+              $('#content').css('top', '50px');
+              $('#footer').show();
+              $('#header').show();
+          });
 
-        var f = parseFloat($('#fuel').val());
-        var p = parseFloat($('#price').val());
-
-        if(p > 1 && f > 1)
-        {
-            $('#pricel').val((p/f).toFixed(2) + ' HUF / Liter');
-        }
-        else
-        {
-            $('#pricel').val(0 + ' HUF / Liter');
-        }
-    }
-
-
-   $(document).ready(function () {
-
-
-       var spin = false;
-       $("#header").pullToRefresh({
-           refresh:300
-       }).on("move.pulltorefresh", function (evt, y) {
-           $("#header").css('height', '6.5rem');
-           $('#welcomep').hide();
-           if (spin == false) {
-               spin = true;
-               $(this).append('<div style=" width: 100%;" class="text-center" id="spinerspan"><p><div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></p></div>');
-               $( "#spinerspan" ).fadeOut( 3000, "linear", function () {
-                   location.reload();
-               });
-           }
-       }).on("refresh.pulltorefresh", function (){
-               location.reload();
-           }).on("end.pulltorefresh", function (evt, y){
-               $('#spinerspan').remove();
-           spin = false;
-           $(this).css('height', '2.5rem');
-           $('#welcomep').show();
-       });
-
-       $('.carousel-item').removeClass('active');
-
-       switch ( document.location.href) {
-           case '{{route('home')}}':
-               $('.carousel-item:nth-child(1)').addClass('active');
-
-               break;
-           case '{{route('fuel')}}':
-               $('.carousel-item:nth-child(2)').addClass('active');
-
-               break;
-           case '{{route('service')}}' :
-               $('.carousel-item:nth-child(3)').addClass('active');
-               break;
-       }
-
-
-        $('.navi').on('click', function () {
-            $('.carousel-item').removeClass('active');
-
-            $('.navi').removeClass('bg-light text-secondary bg-transparent');
-            $('.navi').addClass('bg-transparent');
-            $(this).addClass('bg-light text-secondary');
-            $(this).removeClass('bg-transparent');
-
-            switch ($(this).data('id')) {
-                case 'home':
-                    $('.carousel-item:nth-child(1)').addClass('active');
-                    document.location.href = '{{route('home')}}';
-                    break;
-                case 'fuel':
-                    $('.carousel-item:nth-child(2)').addClass('active');
-                    document.location.href = '{{route('fuel')}}';
-                    break;
-                case 'service' :
-                    $('.carousel-item:nth-child(3)').addClass('active');
-                    document.location.href = '{{route('service')}}';
-                    break;
-            }
-        });
+      });
     });
 </script>
-
 </body>
 </html>
