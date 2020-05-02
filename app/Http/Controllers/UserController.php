@@ -5,15 +5,53 @@ namespace App\Http\Controllers;
 
 use App\Fuel;
 use App\Service;
+use App\User;
+use http\Env\Response;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Redirect;
 
 
-class UserController extends BaseController
+class UserController extends Controller
 {
-    public function Login(Request $r)
+    use AuthenticatesUsers;
+
+    public function login(Request $request)
+    {
+
+        $credentials = ['email' => $request->post('email'), 'password' => $request->post('password')];
+
+        if ($this->guard('web')->attempt($credentials)) {
+            $request->session()->put('loged-in', true);
+            return view('home.index');
+        } else if (Auth::guard('web')->check()) {
+            $request->session()->put('loged-in', true);
+            return view('home.index');
+        } else {
+            return view('login');
+        }
+    }
+
+    public function check()
+    {
+        if (session('loged-in', false)) {
+            return json_encode(["visible" => true]);
+        }
+        else{
+            return json_encode(["visible" => false]);
+        }
+    }
+
+    public function logout()
+    {
+         Auth::logout();
+         \Session::flush();
+         return view('login');
+    }
+   /* public function Login(Request $r)
     {
 
         $users = DB::select('Select * from users');
@@ -74,7 +112,7 @@ class UserController extends BaseController
         $r->session()->put('userlogin', true);
 
         return redirect('home');
-    }
+    }*/
     public function home(Request $request)
     {
 

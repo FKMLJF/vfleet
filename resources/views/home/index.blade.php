@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col-12 pt-3 text-center">
+        <div class="col-12 pt-3 text-center" onclick="carinfo()">
             <p>
                 <button class="bg-primary btn p-4 text-center waves-effect waves-light"
                         style="width: 97%!important; border-radius: 20px;">
@@ -11,7 +11,7 @@
             </p>
         </div>
 
-        <div class="col-12  text-center">
+        <div class="col-12  text-center" onclick="documents()">
             <p>
                 <button class="bg-primary btn p-4 text-center waves-effect waves-light"
                         style="width: 97%!important; border-radius: 20px;">
