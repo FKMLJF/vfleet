@@ -51,6 +51,7 @@ Route::middleware(['auth'])->group(function () {
         ->prefix('fuel')
         ->group(function () {
             Route::post('/index', 'FuelController@index')->name('index');
+            Route::post('/postfuel', 'FuelController@postfuel')->name('postfuel');
         });
 
     Route::as('service.')

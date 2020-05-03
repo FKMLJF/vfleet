@@ -39,9 +39,13 @@
                 <button class="blue-gradient btn p-4 text-center waves-effect waves-light"
                         style="width: 97%!important; border-radius: 60px;">
                     <h5 class="text-white">Dokumentumok</h5>
-                    <span class="text-white" style="font-size: 12px">Müszaki vizsga érvényesség: 2022-01-22</span>
+                    @if(!empty($muszaki))
+                    <span class="text-white" style="font-size: 12px">Müszaki vizsga érvényesség: {{substr($muszaki->meddig,0,10)}}</span>
+                   @endif
                     <br>
-                    <span class="text-white" style="font-size: 12px">Biztositás érvényesség: 2020-09-01</span>
+                    @if(!empty($kgfb))
+                    <span class="text-white" style="font-size: 12px">Biztositás érvényesség: {{substr($kgfb->meddig,0,10)}}</span>
+                    @endif
                     <i class="fas fa-users text-white menu-icon"></i>
                 </button>
             </p>

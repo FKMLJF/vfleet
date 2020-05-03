@@ -8,6 +8,14 @@
     <div class="card-body px-lg-5" style="padding-top: 20%; background-image: url(images/vfleetdark.png); background-repeat: no-repeat;
 background-size: 80px; background-position-x: center">
 
+        @if(!empty($error))
+            <div class=" mt-3 alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Hiba!</strong> {{$error}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @endif
         <!-- Form -->
         <form class="text-center" style="color: #757575;" action="{{route('login')}}" method="POST">
 
@@ -38,7 +46,7 @@ background-size: 80px; background-position-x: center">
             </div>
 
             <!-- Sign in button -->
-            <button class="btn blue-gradient  btn-block my-4 waves-effect z-depth-0" id="login" onclick="home();setRemember()" style="border-radius: 30px" type="button">Bejelentkezés</button>
+            <button class="btn blue-gradient  btn-block my-4 waves-effect z-depth-0" id="login" onclick="home(true);setRemember()" style="border-radius: 30px" type="button">Bejelentkezés</button>
 
 
         </form>

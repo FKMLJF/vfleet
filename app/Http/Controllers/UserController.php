@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Fuel;
 use App\Models\Autok;
+use App\Models\Muszaki;
 use App\Service;
 use App\User;
 use http\Env\Response;
@@ -29,7 +30,8 @@ class UserController extends Controller
             {
                 $car = Autok::where('azonosito',session('car_id', 0))->first();
                 $request->session()->put('loged-in', true);
-                return view("home.index", compact("car"));
+                $muszaki = Muszaki::where('auto_azonosito', '=', session('car_id',0))->first();
+                return view("home.index", compact("car", 'muszaki'));
             }
             else{
             $user = User::all()->where('id', '=', Auth::id())->first()->toArray();
@@ -43,9 +45,11 @@ class UserController extends Controller
             {
                 $car = Autok::where('azonosito',session('car_id', 0))->first();
                 $request->session()->put('loged-in', true);
-                return view("home.index", compact("car"));
+                $muszaki = Muszaki::where('auto_azonosito', '=', session('car_id',0))->first();
+                return view("home.index", compact("car", 'muszaki'));
             }
             else{
+                $muszaki = Muszaki::where('auto_azonosito', '=', session('car_id',0))->first();
             $user = User::all()->where('id', '=', Auth::id())->first()->toArray();
             $cars = Autok::where('user_id', $user['id'])
                 ->orWhere('user_id', $user['root_user'])->get()->toArray();
@@ -53,9 +57,11 @@ class UserController extends Controller
             return view('car.carselect', compact('cars'));
             }
         } else {
+
+            $error = empty($request->post('loginbtn'))?null:"Hibás e-mail vagy jelszó!";
             Auth::logout();
             \Session::flush();
-            return view('login');
+            return view('login', compact('error'));
         }
     }
 

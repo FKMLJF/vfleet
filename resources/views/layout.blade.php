@@ -55,6 +55,9 @@
 <div id="header" class="blue-gradient p-1 text-left" >
     <div class="logo pt-2">
         <span class="text-white pl-5" id="menu-title">VFleet Flotta Menedzsment</span>
+        <i class="fas fa-arrow-left text-white waves-effect"  onclick="home()" style="position: absolute;
+    left: 16px;
+    top: 16px; display: none"></i>
     </div>
 </div>
 <div id="content" style="overflow-y: auto; {{\Auth::guard('web')->check()? 'top:50px;' : 'top:0px;'}} left: 0px; right: 0px; bottom: 50px; position: absolute;background-image: radial-gradient(circle, #ffffff, #f8f8fd, #f1f2fc, #e7ecfa, #dde7f9);">
@@ -112,19 +115,22 @@
         });
     }
 
-    function home(){
+    function home(btn=false){
         $.when($.ajax({
             url: "{{route('log-in')}}?id={{env('ASSET_FLAG')}}",
             method: 'POST',
             data: {
                 _token: "{{csrf_token()}}",
                 email: $("#email").val(),
-                password: $("#password").val()
+                password: $("#password").val(),
+                loginbtn: btn?true:null,
             },
             context: document.body
         }).done(function (data) {
             $('#content').html(data);
             $('#menu-title').text('VFleet Flotta Menedzsment');
+            $('.logo').css("background-image", "url(images/vfleet.png)");
+            $('.fa-arrow-left').hide();
             $('.toggle-btn').bootstrapToggle({
                 on: 'Igen',
                 off: 'Nem',
@@ -175,6 +181,29 @@
             context: document.body
         }).done(function (data) {
             $('#content').html(data);
+            $('.logo').css("background-image", "none");
+            $('.fa-arrow-left').show();
+            visibleCheck();
+            $('#menu-title').text('Tankolás');
+
+        });
+    }
+
+    function postfuel(){
+        $.ajax({
+            url: "{{route('fuel.postfuel')}}?id={{env('ASSET_FLAG')}}",
+            method: 'POST',
+            data: {
+                _token: "{{csrf_token()}}",
+                km_ora: $('#kmora').val(),
+                liter: $('#tankoltliter').val(),
+                ar: $('#ar').val(),
+            },
+            context: document.body
+        }).done(function (data) {
+            $('#content').html(data);
+            $('.logo').css("background-image", "none");
+            $('.fa-arrow-left').show();
             visibleCheck();
             $('#menu-title').text('Tankolás');
 
@@ -191,6 +220,8 @@
             context: document.body
         }).done(function (data) {
             $('#content').html(data);
+            $('.logo').css("background-image", "none");
+            $('.fa-arrow-left').show();
             visibleCheck();
             $('#menu-title').text('Jármű választása');
 
@@ -226,6 +257,8 @@
             context: document.body
         }).done(function (data) {
             $('#content').html(data);
+            $('.logo').css("background-image", "none");
+            $('.fa-arrow-left').show();
             visibleCheck();
             $('#menu-title').text('Szervízlap rörgzítése');
         });
@@ -241,6 +274,8 @@
             context: document.body
         }).done(function (data) {
             $('#content').html(data);
+            $('.logo').css("background-image", "none");
+            $('.fa-arrow-left').show();
             visibleCheck();
             $('#menu-title').text('Profil');
         });
@@ -256,6 +291,8 @@
             context: document.body
         }).done(function (data) {
             $('#content').html(data);
+            $('.logo').css("background-image", "none");
+            $('.fa-arrow-left').show();
             visibleCheck();
             $('#menu-title').text('Kapcsolódó dokumentumok');
         });
@@ -271,6 +308,8 @@
             context: document.body
         }).done(function (data) {
             $('#content').html(data);
+            $('.logo').css("background-image", "none");
+            $('.fa-arrow-left').show();
             visibleCheck();
             $('#menu-title').text('Járműadatok');
         });
