@@ -1,5 +1,5 @@
 <!-- Material form register -->
-<div class="card m-2">
+<div class="card m-2 waves-effect ">
 
     <!--Card content-->
     <div class="card-body px-lg-5 pt-0">

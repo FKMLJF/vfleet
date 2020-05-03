@@ -1,5 +1,5 @@
 <!-- Card -->
-<div class="card m-2 bg-primary text-white">
+<div class="card m-2 blue-gradient text-white">
 
     <!-- Card image -->
     <div class="view overlay text-center">

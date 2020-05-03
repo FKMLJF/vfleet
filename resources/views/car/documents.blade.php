@@ -1,5 +1,6 @@
 <!-- Card -->
-<div class="card  waves-effect waves-light m-2 bg-primary text-white">
+@if(!empty($muszaki))
+<div class="card  waves-effect waves-light m-2 blue-gradient text-white">
 
     <!-- Card image -->
     <div class="view overlay text-center">
@@ -12,15 +13,18 @@
         <!-- Title -->
         <h4 class="card-title">Műszaki vizsga</h4>
         <!-- Text -->
-        <p class="card-text text-white">Érvényesség: 2022-01-22</p>
+        <p class="card-text text-white">Érvényesség: {{substr($muszaki->meddig, 0, 10)}}</p>
 
     </div>
 
 </div>
+@endif
 <!-- Card -->
 
+@if(!empty($kgfb))
+
 <!-- Card -->
-<div class="card waves-effect waves-light m-2 bg-primary text-white">
+<div class="card waves-effect waves-light m-2 blue-gradient text-white">
 
     <!-- Card image -->
     <div class="view overlay text-center">
@@ -32,9 +36,10 @@
         <!-- Title -->
         <h4 class="card-title">Kötlező biztosítás</h4>
         <!-- Text -->
-        <p class="card-text text-white">Érvényesség: 2020-09-01</p>
+        <p class="card-text text-white">Érvényesség: {{substr($kgfb->meddig,0,10)}}</p>
 
     </div>
 
 </div>
+@endif
 <!-- Card -->

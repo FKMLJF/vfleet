@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Autok;
 
+use App\Models\Muszaki;
 use App\Models\User;
 use http\Env\Response;
 use Illuminate\Http\Request;
@@ -15,10 +16,9 @@ class CarController
 {
     public function documents()
     {
-        $user = User::all()->where('id', '=', Auth::id())->first()->toArray();
-        $cars = Autok::where('user_id', $user['id'])
-            ->orWhere('user_id', $user['root_user'])->get()->toArray();
-        return view('car.documents');
+        $muszaki = Muszaki::where('auto_azonosito', '=', session('car_id',0))->first();
+        $kgfb = null;
+        return view('car.documents', compact('muszaki', 'kgfb'));
     }
 
     public function carinfo()
