@@ -4,7 +4,7 @@
             <p>
                 <button class="bg-primary btn p-4 text-center waves-effect waves-light"
                         style="width: 97%!important; border-radius: 20px;">
-                    <h5 class="text-white">ABC-154</h5>
+                    <h5 class="text-white">{{$car->rendszam}}</h5>
                     <span class="text-white" style="font-size: 16px">Információk a járműröl</span>
                     <i class="fas fa-car text-white menu-icon"></i>
                 </button>

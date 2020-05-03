@@ -40,6 +40,10 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/documents', 'CarController@documents')->name('documents');
 
             Route::post('/carinfo', 'CarController@carinfo')->name('carinfo');
+
+            Route::post('/carselect', 'CarController@carselect')->name('carselect');
+
+            Route::post('/setcarselect', 'CarController@setcarselect')->name('setcarselect');
         });
 
 

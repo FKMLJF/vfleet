@@ -14,21 +14,21 @@ background-size: 80px; background-position-x: center">
             <!-- Email -->
             <div class="md-form">
                 <input type="email" id="email" name="email" class="form-control">
-                <label for="materialLoginFormEmail">E-mail</label>
+                <label for="email" class="thisislabel">E-mail cím</label>
             </div>
 
             <!-- Password -->
             <div class="md-form">
                 <input type="password" id="password"  name="password" class="form-control">
-                <label for="materialLoginFormPassword">Password</label>
+                <label for="password" >Jelszó</label>
             </div>
 
-            <div class="d-flex " onclick="setRemember()">
+            <div class="d-flex ">
                 <div>
                     <!-- Remember me -->
 
                     <input type="checkbox" class="toggle-btn" id="remember">
-                    <label class="form-check-label" for="materialUnchecked">Jegyezz meg!</label>
+                    <label class="form-check-label" >Jegyezz meg!</label>
 
                 </div>
                 <!-- <div>

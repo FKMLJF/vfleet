@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Fuel;
+use App\Models\Autok;
 use App\Service;
 use App\User;
 use http\Env\Response;
@@ -23,21 +24,44 @@ class UserController extends Controller
     {
 
         $credentials = ['email' => $request->post('email'), 'password' => $request->post('password')];
-
         if ($this->guard('web')->attempt($credentials)) {
-            $request->session()->put('loged-in', true);
-            return view('home.index');
+            if((session('car_id', 0) != 0))
+            {
+                $car = Autok::where('azonosito',session('car_id', 0))->first();
+                $request->session()->put('loged-in', true);
+                return view("home.index", compact("car"));
+            }
+            else{
+            $user = User::all()->where('id', '=', Auth::id())->first()->toArray();
+            $cars = Autok::where('user_id', $user['id'])
+                ->orWhere('user_id', $user['root_user'])->get()->toArray();
+
+            return view('car.carselect', compact('cars'));
+            }
         } else if (Auth::guard('web')->check()) {
-            $request->session()->put('loged-in', true);
-            return view('home.index');
+            if((session('car_id', 0) != 0))
+            {
+                $car = Autok::where('azonosito',session('car_id', 0))->first();
+                $request->session()->put('loged-in', true);
+                return view("home.index", compact("car"));
+            }
+            else{
+            $user = User::all()->where('id', '=', Auth::id())->first()->toArray();
+            $cars = Autok::where('user_id', $user['id'])
+                ->orWhere('user_id', $user['root_user'])->get()->toArray();
+
+            return view('car.carselect', compact('cars'));
+            }
         } else {
+            Auth::logout();
+            \Session::flush();
             return view('login');
         }
     }
 
     public function check()
     {
-        if (session('loged-in', false)) {
+        if (session('loged-in', false) && (session('car_id', 0) != 0)) {
             return json_encode(["visible" => true]);
         }
         else{

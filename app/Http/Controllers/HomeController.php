@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Autok;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -25,7 +26,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home.index');
+        $car = Autok::where('azonosito',session('car_id', 0))->first();
+        return view('home.index', compact('car'));
     }
 
     public function profil()

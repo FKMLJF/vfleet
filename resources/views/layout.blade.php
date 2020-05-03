@@ -113,7 +113,7 @@
     }
 
     function home(){
-        $.ajax({
+        $.when($.ajax({
             url: "{{route('log-in')}}?id={{env('ASSET_FLAG')}}",
             method: 'POST',
             data: {
@@ -134,10 +134,12 @@
                 size: "small",
             });
             visibleCheck();
+        })).then(function () {
+            remember();
         });
     }
     function logout(){
-        $.ajax({
+        $.when($.ajax({
             url: "{{route('logout')}}?id={{env('ASSET_FLAG')}}",
             method: 'POST',
             data: {
@@ -150,7 +152,16 @@
             $('#content').css('top', '0px');
             $('#header').hide();
             $('#footer').hide();
+        })).then(function () {
             remember();
+            $('.toggle-btn').bootstrapToggle({
+                on: 'Igen',
+                off: 'Nem',
+                onstyle: 'bg-white',
+                offstyle: 'bg-white',
+                style: "ios",
+                size: "small",
+            });
         });
     }
 
@@ -166,6 +177,41 @@
             $('#content').html(data);
             visibleCheck();
             $('#menu-title').text('Tankolás');
+
+        });
+    }
+
+    function car(){
+        $.ajax({
+            url: "{{route('car.carselect')}}?id={{env('ASSET_FLAG')}}",
+            method: 'POST',
+            data: {
+                _token: "{{csrf_token()}}",
+            },
+            context: document.body
+        }).done(function (data) {
+            $('#content').html(data);
+            visibleCheck();
+            $('#menu-title').text('Jármű választása');
+
+        });
+    }
+
+    function selectcar(){
+        $.ajax({
+            url: "{{route('car.setcarselect')}}?id={{env('ASSET_FLAG')}}",
+            method: 'POST',
+            data: {
+                _token: "{{csrf_token()}}",
+                azonosito: $('#carselect option:selected').val()
+            },
+            context: document.body
+        }).done(function (data) {
+            data = JSON.parse(data);
+            if(data.success)
+            {
+                home();
+            }
 
         });
     }
@@ -237,11 +283,17 @@
      });
 
     function remember() {
+        console.warn(localStorage.getItem('remember'));
             if (localStorage.getItem('remember') != null) {
                 var tmb = JSON.parse(localStorage.getItem('remember'));
                 $('#remember').attr('checked', 'checked');
                 $('#email').val(tmb[0]);
                 $('#password').val(tmb[1]);
+                $('.toggle').removeClass('off');
+                $('#remember').bootstrapToggle('on');
+
+                $('#email').siblings('label').first().addClass('active');
+                $('#password').siblings('label').first().addClass('active');
             } else {
                 $('#remember').removeAttr('checked');
                 $('#email').val('');
