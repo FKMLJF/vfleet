@@ -44,6 +44,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/carselect', 'CarController@carselect')->name('carselect');
 
             Route::post('/setcarselect', 'CarController@setcarselect')->name('setcarselect');
+
         });
 
 
@@ -58,6 +59,8 @@ Route::middleware(['auth'])->group(function () {
         ->prefix('service')
         ->group(function () {
             Route::post('/index', 'ServiceController@index')->name('index');
+
+            Route::post('/postservice', 'ServiceController@postservice')->name('postservice');
         });
 });
 

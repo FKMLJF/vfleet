@@ -1,4 +1,3 @@
-
 <html lang="hu">
 <head>
     <meta charset="UTF-8">
@@ -21,60 +20,78 @@
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
     <style>
-        .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px; }
-        .toggle.ios .toggle-handle { border-radius: 20px; }
-        i.menu-icon{
+        .toggle.ios, .toggle-on.ios, .toggle-off.ios {
+            border-radius: 20px;
+        }
+
+        .toggle.ios .toggle-handle {
+            border-radius: 20px;
+        }
+
+        i.menu-icon {
             position: absolute;
             bottom: 8%;
             right: 4%;
             font-size: 600%;
             opacity: 0.3;
         }
-        div.logo{
-            height: 100%; width: auto;
+
+        div.logo {
+            height: 100%;
+            width: auto;
             background-size: contain;
             background-image: url(images/vfleet.png);
             background-repeat: no-repeat;
         }
 
-        #header{
+        #header {
             display: none;
             position: absolute;
-            top:0px;
+            top: 0px;
             height: 50px;
             width: 100%;
             overflow: hidden;
         }
 
-        .toggle-handle{
+        .toggle-handle {
             background: #4285f4 !important;
         }
     </style>
 </head>
 <body style="height:100%; width:100%">
-<div id="header" class="blue-gradient p-1 text-left" >
+<div id="header" class="blue-gradient p-1 text-left">
     <div class="logo pt-2">
         <span class="text-white pl-5" id="menu-title">VFleet Flotta Menedzsment</span>
-        <i class="fas fa-arrow-left text-white waves-effect"  onclick="home()" style="position: absolute;
+        <i class="fas fa-arrow-left text-white waves-effect" onclick="home()" style="position: absolute;
     left: 16px;
     top: 16px; display: none"></i>
     </div>
 </div>
-<div id="content" style="overflow-y: auto; {{\Auth::guard('web')->check()? 'top:50px;' : 'top:0px;'}} left: 0px; right: 0px; bottom: 50px; position: absolute;background-image: radial-gradient(circle, #ffffff, #f8f8fd, #f1f2fc, #e7ecfa, #dde7f9);">
+<div id="content"
+     style="overflow-y: auto; {{\Auth::guard('web')->check()? 'top:50px;' : 'top:0px;'}} left: 0px; right: 0px; bottom: 50px; position: absolute;background-image: radial-gradient(circle, #ffffff, #f8f8fd, #f1f2fc, #e7ecfa, #dde7f9);">
 
 </div>
-<div id="footer" class="blue-gradient p-1 text-center" style="position: absolute; bottom:0px; height: 50px; width: 100%; overflow: hidden">
+<div id="footer" class="blue-gradient p-1 text-center"
+     style="position: absolute; bottom:0px; height: 50px; width: 100%; overflow: hidden">
     <p>
-    <button style="width: 23%; height: 100%; background: transparent!important; margin: 0px !important; padding: 0px!important;" class="btn btn-white"  onclick="home()" >
-        <i class="fas fa-home text-white" style="opacity: 0.5; font-size: 30px"></i>
-    </button>
-        <button style="width: 25%; height: 100%; background: transparent!important; margin: 0px !important; padding: 0px!important;" class="btn btn-white" onclick="fuel()" >
+        <button
+            style="width: 23%; height: 100%; background: transparent!important; margin: 0px !important; padding: 0px!important;"
+            class="btn btn-white" onclick="home()">
+            <i class="fas fa-home text-white" style="opacity: 0.5; font-size: 30px"></i>
+        </button>
+        <button
+            style="width: 25%; height: 100%; background: transparent!important; margin: 0px !important; padding: 0px!important;"
+            class="btn btn-white" onclick="fuel()">
             <i class="fas fa-gas-pump text-white" style="opacity: 0.5; font-size: 30px"></i>
         </button>
-        <button style="width: 25%; height: 100%; background: transparent!important; margin: 0px !important; padding: 0px!important;" class="btn btn-white" onclick="service()"  >
+        <button
+            style="width: 25%; height: 100%; background: transparent!important; margin: 0px !important; padding: 0px!important;"
+            class="btn btn-white" onclick="service()">
             <i class="fas fa-wrench text-white" style="opacity: 0.5; font-size: 30px"></i>
         </button>
-        <button style="width: 23%; height: 100%; background: transparent!important; margin: 0px !important; padding: 0px!important;" class="btn btn-white" onclick="profil()" >
+        <button
+            style="width: 23%; height: 100%; background: transparent!important; margin: 0px !important; padding: 0px!important;"
+            class="btn btn-white" onclick="profil()">
             <i class="fas fa-user text-white" style="opacity: 0.5; font-size: 30px"></i>
         </button>
     </p>
@@ -102,12 +119,11 @@
             context: document.body
         }).done(function (data) {
             data = JSON.parse(data);
-            if(data.visible){
+            if (data.visible) {
                 $('#header').show();
                 $('#footer').show();
                 $('#content').css('top', '50px');
-            }
-            else{
+            } else {
                 $('#content').css('top', '0px');
                 $('#header').hide();
                 $('#footer').hide();
@@ -115,7 +131,7 @@
         });
     }
 
-    function home(btn=false){
+    function home(btn = false) {
         $.when($.ajax({
             url: "{{route('log-in')}}?id={{env('ASSET_FLAG')}}",
             method: 'POST',
@@ -123,7 +139,7 @@
                 _token: "{{csrf_token()}}",
                 email: $("#email").val(),
                 password: $("#password").val(),
-                loginbtn: btn?true:null,
+                loginbtn: btn ? true : null,
             },
             context: document.body
         }).done(function (data) {
@@ -144,7 +160,8 @@
             remember();
         });
     }
-    function logout(){
+
+    function logout() {
         $.when($.ajax({
             url: "{{route('logout')}}?id={{env('ASSET_FLAG')}}",
             method: 'POST',
@@ -171,7 +188,7 @@
         });
     }
 
-    function fuel(){
+    function fuel() {
         $.ajax({
             url: "{{route('fuel.index')}}?id={{env('ASSET_FLAG')}}",
             method: 'POST',
@@ -189,28 +206,64 @@
         });
     }
 
-    function postfuel(){
-        $.ajax({
-            url: "{{route('fuel.postfuel')}}?id={{env('ASSET_FLAG')}}",
-            method: 'POST',
-            data: {
-                _token: "{{csrf_token()}}",
-                km_ora: $('#kmora').val(),
-                liter: $('#tankoltliter').val(),
-                ar: $('#ar').val(),
-            },
-            context: document.body
-        }).done(function (data) {
-            $('#content').html(data);
-            $('.logo').css("background-image", "none");
-            $('.fa-arrow-left').show();
-            visibleCheck();
-            $('#menu-title').text('Tankolás');
-
+    function error(data) {
+        $('.errordiv').remove();
+        $('.form-control').removeClass('invalid');
+        jQuery.each(data.responseJSON, function (i, element) {
+            $('#'+ i).addClass('invalid');//.append('<div class="invalid-feedback">'+element+'</div>');
+            $('<div class="text-danger errordiv">' + element[0] + '</div>').insertAfter($('#'+ i));
         });
     }
 
-    function car(){
+    function postfuel() {
+        $.ajax({
+                url: "{{route('fuel.postfuel')}}?id={{env('ASSET_FLAG')}}",
+                method: 'POST',
+                data: {
+                    _token: "{{csrf_token()}}",
+                    km_ora: $('#km_ora').val(),
+                    liter: $('#liter').val(),
+                    ar: $('#ar').val(),
+                },
+                context: document.body,
+                error: function (data) {
+                    error(data);
+                },success: function (data) {
+                data = JSON.parse(data);
+                $('.km').text(data.km);
+                $('.alert-success').show();
+                $('.alert-success').fadeOut(3000);
+                $('.form-control').val('');
+                $('.active').removeClass('active');
+            }
+        });
+    }
+    function postservice() {
+        $.ajax({
+                url: "{{route('service.postservice')}}?id={{env('ASSET_FLAG')}}",
+                method: 'POST',
+                data: {
+                    _token: "{{csrf_token()}}",
+                    km_ora: $('#km_ora').val(),
+                    nev: $('#nev').val(),
+                    ar: $('#ar').val(),
+                    leiras: $('#leiras').val(),
+                },
+                context: document.body,
+                error: function (data) {
+                    error(data);
+                },success: function (data) {
+                    data = JSON.parse(data);
+                    $('.km').text(data.km);
+                $('.alert-success').show();
+                $('.alert-success').fadeOut(3000);
+                $('.form-control').val('');
+                $('.active').removeClass('active');
+            }
+        });
+    }
+
+    function car() {
         $.ajax({
             url: "{{route('car.carselect')}}?id={{env('ASSET_FLAG')}}",
             method: 'POST',
@@ -228,7 +281,7 @@
         });
     }
 
-    function selectcar(){
+    function selectcar() {
         $.ajax({
             url: "{{route('car.setcarselect')}}?id={{env('ASSET_FLAG')}}",
             method: 'POST',
@@ -239,15 +292,14 @@
             context: document.body
         }).done(function (data) {
             data = JSON.parse(data);
-            if(data.success)
-            {
+            if (data.success) {
                 home();
             }
 
         });
     }
 
-    function service(){
+    function service() {
         $.ajax({
             url: "{{route('service.index')}}?id={{env('ASSET_FLAG')}}",
             method: 'POST',
@@ -264,7 +316,7 @@
         });
     }
 
-    function profil(){
+    function profil() {
         $.ajax({
             url: "{{route('home.profil')}}?id={{env('ASSET_FLAG')}}",
             method: 'POST',
@@ -281,7 +333,7 @@
         });
     }
 
-    function documents(){
+    function documents() {
         $.ajax({
             url: "{{route('car.documents')}}?id={{env('ASSET_FLAG')}}",
             method: 'POST',
@@ -298,7 +350,7 @@
         });
     }
 
-    function carinfo(){
+    function carinfo() {
         $.ajax({
             url: "{{route('car.carinfo')}}?id={{env('ASSET_FLAG')}}",
             method: 'POST',
@@ -315,33 +367,34 @@
         });
     }
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         home();
         visibleCheck();
         remember();
-     });
+    });
 
     function remember() {
         console.warn(localStorage.getItem('remember'));
-            if (localStorage.getItem('remember') != null) {
-                var tmb = JSON.parse(localStorage.getItem('remember'));
-                $('#remember').attr('checked', 'checked');
-                $('#email').val(tmb[0]);
-                $('#password').val(tmb[1]);
-                $('.toggle').removeClass('off');
-                $('#remember').bootstrapToggle('on');
+        if (localStorage.getItem('remember') != null) {
+            var tmb = JSON.parse(localStorage.getItem('remember'));
+            $('#remember').attr('checked', 'checked');
+            $('#email').val(tmb[0]);
+            $('#password').val(tmb[1]);
+            $('.toggle').removeClass('off');
+            $('#remember').bootstrapToggle('on');
 
-                $('#email').siblings('label').first().addClass('active');
-                $('#password').siblings('label').first().addClass('active');
-            } else {
-                $('#remember').removeAttr('checked');
-                $('#email').val('');
-                $('#password').val('');
-            }
+            $('#email').siblings('label').first().addClass('active');
+            $('#password').siblings('label').first().addClass('active');
+        } else {
+            $('#remember').removeAttr('checked');
+            $('#email').val('');
+            $('#password').val('');
+        }
     }
+
     function setRemember() {
         if ($('#remember').is(':checked') && $('#email').val() != '' && $('#password').val() != '') {
-            var datas = [ $('#email').val(), $('#password').val()];
+            var datas = [$('#email').val(), $('#password').val()];
             localStorage.setItem('remember', JSON.stringify(datas));
         } else {
             localStorage.removeItem('remember')

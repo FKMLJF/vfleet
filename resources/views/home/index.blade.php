@@ -6,7 +6,11 @@
                 <button class="blue-gradient btn p-4 text-center waves-effect waves-light"
                         style="width: 97%!important; border-radius: 60px;">
                     <h5 class="text-white">Szervíz</h5>
-                    <span class="text-white" style="font-size: 16px">1 325 000 Ft (e havi)</span>
+                    @if(!empty($szerviz_havi_kts[0]->ar))
+                        <span class="text-white" style="font-size: 16px">{{number_format($szerviz_havi_kts[0]->ar,0,"."," ")}} Ft (e havi)</span>
+                    @else
+                        <span class="text-white" style="font-size: 16px">0 Ft (e havi)</span>
+                    @endif
                     <i class="fas fa-wrench text-white menu-icon"></i>
                 </button>
             </p>
@@ -17,7 +21,12 @@
                 <button class="blue-gradient btn p-4 text-center waves-effect waves-light"
                         style="width: 97%!important; border-radius: 60px;">
                     <h5 class="text-white">Tankolás</h5>
-                    <span class="text-white" style="font-size: 16px">771 050 Ft (e havi)</span>
+                    @if(!empty($tankolas_havi_kts[0]->ar))
+                    <span class="text-white" style="font-size: 16px">{{number_format($tankolas_havi_kts[0]->ar,0,"."," ")}} Ft (e havi)</span>
+                    @else
+                        <span class="text-white" style="font-size: 16px">0 Ft (e havi)</span>
+                    @endif
+
                     <i class="fas fa-gas-pump text-white menu-icon"></i>
                 </button>
             </p>
