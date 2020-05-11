@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Autok;
 
+use App\Models\Biztositas;
 use App\Models\Muszaki;
 use App\Models\User;
 use http\Env\Response;
@@ -17,7 +18,7 @@ class CarController
     public function documents()
     {
         $muszaki = Muszaki::where('auto_azonosito', '=', session('car_id',0))->first();
-        $kgfb = null;
+        $kgfb = Biztositas::where('auto_azonosito', '=', session('car_id',0))->first();
         return view('car.documents', compact('muszaki', 'kgfb'));
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Fuel;
 use App\Models\Autok;
+use App\Models\Biztositas;
 use App\Models\Muszaki;
 use App\Service;
 use App\User;
@@ -31,6 +32,7 @@ class UserController extends Controller
                 $car = Autok::where('azonosito',session('car_id', 0))->first();
                 $request->session()->put('loged-in', true);
                 $muszaki = Muszaki::where('auto_azonosito', '=', session('car_id',0))->first();
+                $kgfb = Biztositas::where('auto_azonosito', '=', session('car_id',0))->first();
                 $tankolas_havi_kts = DB::table('tankolas')
                     ->select(DB::raw('sum(osszeg) ar '))
                     ->where('auto_azonosito','=', session('car_id', 0))
@@ -43,7 +45,7 @@ class UserController extends Controller
                     ->whereRaw('MONTH(created_at) = MONTH(CURRENT_DATE()) ')
                     ->whereRaw('YEAR(created_at) = YEAR(CURRENT_DATE()) ')
                     ->get();
-                return view("home.index", compact("car", 'muszaki', 'tankolas_havi_kts', 'szerviz_havi_kts'));
+                return view("home.index", compact("car", 'muszaki', 'tankolas_havi_kts', 'szerviz_havi_kts', 'kgfb'));
             }
             else{
             $user = User::all()->where('id', '=', Auth::id())->first()->toArray();
@@ -58,6 +60,7 @@ class UserController extends Controller
                 $car = Autok::where('azonosito',session('car_id', 0))->first();
                 $request->session()->put('loged-in', true);
                 $muszaki = Muszaki::where('auto_azonosito', '=', session('car_id',0))->first();
+                $kgfb = Biztositas::where('auto_azonosito', '=', session('car_id',0))->first();
                 $tankolas_havi_kts = DB::table('tankolas')
                     ->select(DB::raw('sum(osszeg) ar '))
                     ->where('auto_azonosito','=', session('car_id', 0))
@@ -70,12 +73,13 @@ class UserController extends Controller
                     ->whereRaw('MONTH(created_at) = MONTH(CURRENT_DATE()) ')
                     ->whereRaw('YEAR(created_at) = YEAR(CURRENT_DATE()) ')
                     ->get();
-                return view("home.index", compact("car", 'muszaki', 'tankolas_havi_kts', "szerviz_havi_kts"));
+                return view("home.index", compact("car", 'muszaki', 'tankolas_havi_kts', "szerviz_havi_kts", 'kgfb'));
             }
             else{
                 $muszaki = Muszaki::where('auto_azonosito', '=', session('car_id',0))->first();
             $user = User::all()->where('id', '=', Auth::id())->first()->toArray();
             $cars = Autok::where('user_id', $user['id'])
+                ->where('rejtett', '=', 0)
                 ->orWhere('user_id', $user['root_user'])->get()->toArray();
 
             return view('car.carselect', compact('cars'));

@@ -13,7 +13,8 @@
         <!-- Title -->
         <h4 class="card-title">Műszaki vizsga</h4>
         <!-- Text -->
-        <p class="card-text text-white">Érvényesség: {{substr($muszaki->meddig, 0, 10)}}</p>
+        <p class="card-text text-white">Érvényesség kezdete: {{substr($muszaki->mettol, 0, 10)}}</p>
+        <p class="card-text text-white">Érvényesség vege: {{substr($muszaki->meddig, 0, 10)}}</p>
 
     </div>
 
@@ -36,8 +37,8 @@
         <!-- Title -->
         <h4 class="card-title">Kötlező biztosítás</h4>
         <!-- Text -->
-        <p class="card-text text-white">Érvényesség: {{substr($kgfb->meddig,0,10)}}</p>
-
+        <p class="card-text text-white">Érvényesség kezdete: {{substr($kgfb->mettol,0,10)}}</p>
+        <p class="card-text text-white">Érvényesség vége: {{substr($kgfb->meddig,0,10)}}</p>
     </div>
 
 </div>
