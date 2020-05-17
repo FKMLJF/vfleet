@@ -39,18 +39,24 @@ class UserController extends Controller
                     ->whereRaw('MONTH(inserted_at) = MONTH(CURRENT_DATE()) ')
                     ->whereRaw('YEAR(inserted_at) = YEAR(CURRENT_DATE()) ')
                     ->get();
-                $szerviz_havi_kts = DB::table('szerviz')
+                $szerviz_havi_kts = DB::table('munkalapok')
                     ->select(DB::raw('sum(ar) ar '))
                     ->where('auto_azonosito','=', session('car_id', 0))
                     ->whereRaw('MONTH(created_at) = MONTH(CURRENT_DATE()) ')
                     ->whereRaw('YEAR(created_at) = YEAR(CURRENT_DATE()) ')
                     ->get();
-                return view("home.index", compact("car", 'muszaki', 'tankolas_havi_kts', 'szerviz_havi_kts', 'kgfb'));
+                $hibacnt = DB::table('hibajegy')
+                    ->select(DB::raw('count(leiras) cnt  '))
+                    ->where('auto_azonosito','=', session('car_id', 0))
+                    ->whereRaw('MONTH(created_at) = MONTH(CURRENT_DATE()) ')
+                    ->whereRaw('YEAR(created_at) = YEAR(CURRENT_DATE()) ')
+                    ->whereRaw('javitva = 0 ')
+                    ->get()->toArray();
+                return view("home.index", compact("car", 'muszaki',"hibacnt", 'tankolas_havi_kts', 'szerviz_havi_kts', 'kgfb'));
             }
             else{
             $user = User::all()->where('id', '=', Auth::id())->first()->toArray();
-            $cars = Autok::where('user_id', $user['id'])
-                ->orWhere('user_id', $user['root_user'])->get()->toArray();
+            $cars = Autok::whereRaw(" user_id IN (Select id from users where root_user=?) or user_id = ? and rejtett = 0 ", [\Auth::id(), \Auth::id()])->get()->toArray();
 
             return view('car.carselect', compact('cars'));
             }
@@ -67,13 +73,20 @@ class UserController extends Controller
                     ->whereRaw('MONTH(inserted_at) = MONTH(CURRENT_DATE()) ')
                     ->whereRaw('YEAR(inserted_at) = YEAR(CURRENT_DATE()) ')
                     ->get();
-                $szerviz_havi_kts = DB::table('szerviz')
+                $szerviz_havi_kts = DB::table('munkalapok')
                     ->select(DB::raw('sum(ar) ar '))
                     ->where('auto_azonosito','=', session('car_id', 0))
                     ->whereRaw('MONTH(created_at) = MONTH(CURRENT_DATE()) ')
                     ->whereRaw('YEAR(created_at) = YEAR(CURRENT_DATE()) ')
                     ->get();
-                return view("home.index", compact("car", 'muszaki', 'tankolas_havi_kts', "szerviz_havi_kts", 'kgfb'));
+                $hibacnt = DB::table('hibajegy')
+                    ->select(DB::raw('count(leiras) cnt  '))
+                    ->where('auto_azonosito','=', session('car_id', 0))
+                    ->whereRaw('MONTH(created_at) = MONTH(CURRENT_DATE()) ')
+                    ->whereRaw('YEAR(created_at) = YEAR(CURRENT_DATE()) ')
+                    ->whereRaw('javitva = 0 ')
+                    ->get()->toArray();
+                return view("home.index", compact("car", 'muszaki',"hibacnt", 'tankolas_havi_kts', "szerviz_havi_kts", 'kgfb'));
             }
             else{
                 $muszaki = Muszaki::where('auto_azonosito', '=', session('car_id',0))->first();

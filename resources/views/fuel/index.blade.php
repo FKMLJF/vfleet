@@ -7,7 +7,7 @@
 
             <div class="md-form">
                 <input autofocus  type="text" id="km_ora" class="form-control">
-                <label for="kmora"><strong class="text-danger">*</strong> Km óra állása. Minimum: <i class="km">{{number_format($minkm, 0,",", " ")}}</i></label>
+                <label for="kmora" class="always-focus"><strong class="text-danger">*</strong> Km óra állása. Minimum: <i class="km">{{number_format($minkm, 0,",", " ")}}</i></label>
             </div>
 
             <div class="md-form">
@@ -23,7 +23,7 @@
 
 
             <!-- Sign in button -->
-            <button class="btn blue-gradient  btn-block my-4 waves-effect z-depth-0" onclick="postfuel()" style="border-radius: 30px" type="button">Mentés</button>
+            <button class="btn blue-gradient  btn-block my-4 waves-effect z-depth-0 save-btn" onclick="postfuel()" style="border-radius: 30px" type="button">Mentés</button>
 
             <div class="alert-success p-2" style="display: none; border-radius: 30px">Sikeres mentés!</div>
         </form>

@@ -8,7 +8,7 @@
 
                 <div class="md-form">
                     <input type="text" id="nev" autofocus  class="form-control">
-                    <label for="nev"><strong class="text-danger">*</strong> Rövid leírás</label>
+                    <label for="nev" class="always-focus"><strong class="text-danger">*</strong> Rövid leírás</label>
                 </div>
 
                 <div class="md-form">
@@ -28,7 +28,7 @@
 
 
                 <!-- Sign in button -->
-                <button class="btn blue-gradient  btn-block my-4 waves-effect z-depth-0" style="border-radius: 30px" onclick="postservice()" type="button">Mentés</button>
+                <button class="btn blue-gradient  btn-block my-4 waves-effect z-depth-0 save-btn" style="border-radius: 30px" onclick="postservice()" type="button">Mentés</button>
                 <div class="alert-success p-2" style="display: none; border-radius: 30px">Sikeres mentés!</div>
 
 

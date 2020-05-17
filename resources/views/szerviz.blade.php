@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('headerbar')
-    <h5 class="font-weight-light text-center text-primary" id="welcomep"> Szervíz Rögzítése</h5>
+    <h5 class="font-weight-light text-center text-primary" id="welcomep"> Gyorsmunkalap Rögzítése</h5>
 @endsection
 
 @section('servicecontent')
@@ -23,7 +23,7 @@
         <form id="fuelform" style="display: none" action="{{route('postservice')}}" method="POST">
             @csrf
             <div class="form-group row">
-                <label for="fuell" class="col-sm-2 col-form-label">Szervízköltség</label>
+                <label for="fuell" class="col-sm-2 col-form-label">Költség</label>
                 <div class="col-sm-10">
                     <input type="text" pattern="[0-9]+" value="{{ old('serviceprice') }}" class="form-control {{ $errors->has('serviceprice') ? ' is-invalid' : '' }}" name="serviceprice" onchange="onch()" id="serviceprice" placeholder="Szervízköltség" required>
 

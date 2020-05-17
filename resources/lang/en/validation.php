@@ -147,5 +147,9 @@ return [
     'attributes' => [
         'name'     => 'név',
         'password' => 'jelszó',
+        'km_ora' => 'Km óra',
+        'ar' => 'Ár',
+        'liter' => 'Tankolt liter',
+        'nev' => 'Rövid leírás',
     ],
 ];

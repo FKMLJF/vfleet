@@ -61,6 +61,12 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/index', 'ServiceController@index')->name('index');
 
             Route::post('/postservice', 'ServiceController@postservice')->name('postservice');
+
+            Route::post('/hiba', 'ServiceController@hiba')->name('hiba');
+
+            Route::post('/posthiba', 'ServiceController@posthiba')->name('posthiba');
+
+            Route::post('sendmail', 'MailSenderController@sendmail')->name('sendmail');
         });
 });
 

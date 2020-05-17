@@ -32,7 +32,7 @@
             position: absolute;
             bottom: 8%;
             right: 4%;
-            font-size: 600%;
+            font-size: 400%;
             opacity: 0.3;
         }
 
@@ -56,12 +56,15 @@
         .toggle-handle {
             background: #4285f4 !important;
         }
+        p{
+            margin-bottom: 0px!important;
+        }
     </style>
 </head>
 <body style="height:100%; width:100%">
 <div id="header" class="blue-gradient p-1 text-left">
     <div class="logo pt-2">
-        <span class="text-white pl-5" id="menu-title">VFleet Flotta Menedzsment</span>
+        <span class="text-white pl-5" onclick="home()" id="menu-title">VFleet Flotta Menedzsment</span>
         <i class="fas fa-arrow-left text-white waves-effect" onclick="home()" style="position: absolute;
     left: 16px;
     top: 16px; display: none"></i>
@@ -130,6 +133,19 @@
             }
         });
     }
+function sendmail() {
+    $(document).ready(function () {
+        $.ajax({
+            url: "{{route('service.sendmail')}}?id={{env('ASSET_FLAG')}}",
+            method: 'POST',
+            data: { _token: "{{csrf_token()}}"},
+            dataType: "json",
+            success: function (data) {
+                console.info(data.success);
+            }
+        });
+    })
+}
 
     function home(btn = false) {
         $.when($.ajax({
@@ -155,7 +171,15 @@
                 style: "ios",
                 size: "small",
             });
+            if(localStorage.getItem('footer') == null) {
+                localStorage.setItem('footer',$('#footer').html());
+                $('#footer').html(localStorage.getItem('footer'));
+
+            }else{
+                $('#footer').html(localStorage.getItem('footer'));
+            }
             visibleCheck();
+            sendmail();
         })).then(function () {
             remember();
         });
@@ -202,7 +226,9 @@
             $('.fa-arrow-left').show();
             visibleCheck();
             $('#menu-title').text('Tankolás');
-
+            $('#footer').html( $(".save-btn").clone());
+            $(".save-btn").first().remove();
+            $('#km_ora').focus();
         });
     }
 
@@ -232,9 +258,12 @@
                 data = JSON.parse(data);
                 $('.km').text(data.km);
                 $('.alert-success').show();
-                $('.alert-success').fadeOut(3000);
+
                 $('.form-control').val('');
-                $('.active').removeClass('active');
+                $('.active:not(.always-focus)').removeClass('active');
+                $('#km_ora').focus();
+                $('.alert-success').fadeOut(3000);
+
             }
         });
     }
@@ -258,7 +287,34 @@
                 $('.alert-success').show();
                 $('.alert-success').fadeOut(3000);
                 $('.form-control').val('');
-                $('.active').removeClass('active');
+                $('.active:not(.always-focus)').removeClass('active');
+                $('#nev').focus();
+            }
+        });
+    }
+
+    function posthiba() {
+        $.ajax({
+                url: "{{route('service.posthiba')}}?id={{env('ASSET_FLAG')}}",
+                method: 'POST',
+                data: {
+                    _token: "{{csrf_token()}}",
+                    km_ora: $('#km_ora').val(),
+                    nev: $('#nev').val(),
+                    ar: $('#ar').val(),
+                    leiras: $('#leiras').val(),
+                },
+                context: document.body,
+                error: function (data) {
+                    error(data);
+                },success: function (data) {
+                    data = JSON.parse(data);
+                    $('.km').text(data.km);
+                $('.alert-success').show();
+                $('.alert-success').fadeOut(3000);
+                $('.form-control').val('');
+                $('.active:not(.always-focus)').removeClass('active');
+                $('#km_ora').focus();
             }
         });
     }
@@ -313,6 +369,30 @@
             $('.fa-arrow-left').show();
             visibleCheck();
             $('#menu-title').text('Szervízlap rörgzítése');
+
+            $('#footer').html( $(".save-btn").clone());
+            $(".save-btn").first().remove();
+            $('#nev').focus();
+        });
+    }
+    function hiba() {
+        $.ajax({
+            url: "{{route('service.hiba')}}?id={{env('ASSET_FLAG')}}",
+            method: 'POST',
+            data: {
+                _token: "{{csrf_token()}}",
+            },
+            context: document.body
+        }).done(function (data) {
+            $('#content').html(data);
+            $('.logo').css("background-image", "none");
+            $('.fa-arrow-left').show();
+            visibleCheck();
+            $('#menu-title').text('Hibajegy rörgzítése');
+
+            $('#footer').html( $(".save-btn").clone());
+            $(".save-btn").first().remove();
+            $('#km_ora').focus();
         });
     }
 
