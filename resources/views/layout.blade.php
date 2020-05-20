@@ -56,8 +56,9 @@
         .toggle-handle {
             background: #4285f4 !important;
         }
-        p{
-            margin-bottom: 0px!important;
+
+        p {
+            margin-bottom: 0px !important;
         }
     </style>
 </head>
@@ -112,6 +113,8 @@
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <!-- Your custom scripts (optional) -->
 <script type="text/javascript">
+
+
     function visibleCheck() {
         $.ajax({
             url: "{{route('check')}}?id={{env('ASSET_FLAG')}}",
@@ -119,7 +122,12 @@
             data: {
                 _token: "{{csrf_token()}}",
             },
-            context: document.body
+            context: document.body,
+            statusCode: {
+                401: function (xhr) {
+                 location.reload();
+                }
+            }
         }).done(function (data) {
             data = JSON.parse(data);
             if (data.visible) {
@@ -133,19 +141,20 @@
             }
         });
     }
-function sendmail() {
-    $(document).ready(function () {
-        $.ajax({
-            url: "{{route('service.sendmail')}}?id={{env('ASSET_FLAG')}}",
-            method: 'POST',
-            data: { _token: "{{csrf_token()}}"},
-            dataType: "json",
-            success: function (data) {
-                console.info(data.success);
-            }
-        });
-    })
-}
+
+    function sendmail() {
+        $(document).ready(function () {
+            $.ajax({
+                url: "{{route('service.sendmail')}}?id={{env('ASSET_FLAG')}}",
+                method: 'POST',
+                data: {_token: "{{csrf_token()}}"},
+                dataType: "json",
+                success: function (data) {
+                    console.info(data.success);
+                }
+            });
+        })
+    }
 
     function home(btn = false) {
         $.when($.ajax({
@@ -157,7 +166,12 @@ function sendmail() {
                 password: $("#password").val(),
                 loginbtn: btn ? true : null,
             },
-            context: document.body
+            context: document.body,
+            statusCode: {
+                401: function (xhr) {
+                 location.reload();
+                }
+            }
         }).done(function (data) {
             $('#content').html(data);
             $('#menu-title').text('VFleet Flotta Menedzsment');
@@ -171,11 +185,11 @@ function sendmail() {
                 style: "ios",
                 size: "small",
             });
-            if(localStorage.getItem('footer') == null) {
-                localStorage.setItem('footer',$('#footer').html());
+            if (localStorage.getItem('footer') == null) {
+                localStorage.setItem('footer', $('#footer').html());
                 $('#footer').html(localStorage.getItem('footer'));
 
-            }else{
+            } else {
                 $('#footer').html(localStorage.getItem('footer'));
             }
             visibleCheck();
@@ -219,14 +233,19 @@ function sendmail() {
             data: {
                 _token: "{{csrf_token()}}",
             },
-            context: document.body
+            context: document.body,
+            statusCode: {
+                401: function (xhr) {
+                 location.reload();
+                }
+            }
         }).done(function (data) {
             $('#content').html(data);
             $('.logo').css("background-image", "none");
             $('.fa-arrow-left').show();
             visibleCheck();
             $('#menu-title').text('Tankolás');
-            $('#footer').html( $(".save-btn").clone());
+            $('#footer').html($(".save-btn").clone());
             $(".save-btn").first().remove();
             $('#km_ora').focus();
         });
@@ -236,25 +255,30 @@ function sendmail() {
         $('.errordiv').remove();
         $('.form-control').removeClass('invalid');
         jQuery.each(data.responseJSON, function (i, element) {
-            $('#'+ i).addClass('invalid');//.append('<div class="invalid-feedback">'+element+'</div>');
-            $('<div class="text-danger errordiv">' + element[0] + '</div>').insertAfter($('#'+ i));
+            $('#' + i).addClass('invalid');//.append('<div class="invalid-feedback">'+element+'</div>');
+            $('<div class="text-danger errordiv">' + element[0] + '</div>').insertAfter($('#' + i));
         });
     }
 
     function postfuel() {
         $.ajax({
-                url: "{{route('fuel.postfuel')}}?id={{env('ASSET_FLAG')}}",
-                method: 'POST',
-                data: {
-                    _token: "{{csrf_token()}}",
-                    km_ora: $('#km_ora').val(),
-                    liter: $('#liter').val(),
-                    ar: $('#ar').val(),
-                },
-                context: document.body,
-                error: function (data) {
-                    error(data);
-                },success: function (data) {
+            url: "{{route('fuel.postfuel')}}?id={{env('ASSET_FLAG')}}",
+            method: 'POST',
+            data: {
+                _token: "{{csrf_token()}}",
+                km_ora: $('#km_ora').val(),
+                liter: $('#liter').val(),
+                ar: $('#ar').val(),
+            },
+            context: document.body,
+            statusCode: {
+                401: function (xhr) {
+                 location.reload();
+                }
+            },
+            error: function (data) {
+                error(data);
+            }, success: function (data) {
                 data = JSON.parse(data);
                 $('.km').text(data.km);
                 $('.alert-success').show();
@@ -267,23 +291,29 @@ function sendmail() {
             }
         });
     }
+
     function postservice() {
         $.ajax({
-                url: "{{route('service.postservice')}}?id={{env('ASSET_FLAG')}}",
-                method: 'POST',
-                data: {
-                    _token: "{{csrf_token()}}",
-                    km_ora: $('#km_ora').val(),
-                    nev: $('#nev').val(),
-                    ar: $('#ar').val(),
-                    leiras: $('#leiras').val(),
-                },
-                context: document.body,
-                error: function (data) {
-                    error(data);
-                },success: function (data) {
-                    data = JSON.parse(data);
-                    $('.km').text(data.km);
+            url: "{{route('service.postservice')}}?id={{env('ASSET_FLAG')}}",
+            method: 'POST',
+            data: {
+                _token: "{{csrf_token()}}",
+                km_ora: $('#km_ora').val(),
+                nev: $('#nev').val(),
+                ar: $('#ar').val(),
+                leiras: $('#leiras').val(),
+            },
+            context: document.body,
+            statusCode: {
+                401: function(xhr) {
+                    logout();
+                }
+            },
+            error: function (data) {
+                error(data);
+            }, success: function (data) {
+                data = JSON.parse(data);
+                $('.km').text(data.km);
                 $('.alert-success').show();
                 $('.alert-success').fadeOut(3000);
                 $('.form-control').val('');
@@ -295,21 +325,26 @@ function sendmail() {
 
     function posthiba() {
         $.ajax({
-                url: "{{route('service.posthiba')}}?id={{env('ASSET_FLAG')}}",
-                method: 'POST',
-                data: {
-                    _token: "{{csrf_token()}}",
-                    km_ora: $('#km_ora').val(),
-                    nev: $('#nev').val(),
-                    ar: $('#ar').val(),
-                    leiras: $('#leiras').val(),
-                },
-                context: document.body,
-                error: function (data) {
-                    error(data);
-                },success: function (data) {
-                    data = JSON.parse(data);
-                    $('.km').text(data.km);
+            url: "{{route('service.posthiba')}}?id={{env('ASSET_FLAG')}}",
+            method: 'POST',
+            data: {
+                _token: "{{csrf_token()}}",
+                km_ora: $('#km_ora').val(),
+                nev: $('#nev').val(),
+                ar: $('#ar').val(),
+                leiras: $('#leiras').val(),
+            },
+            context: document.body,
+            statusCode: {
+                401: function(xhr) {
+                    logout();
+                }
+            },
+            error: function (data) {
+                error(data);
+            }, success: function (data) {
+                data = JSON.parse(data);
+                $('.km').text(data.km);
                 $('.alert-success').show();
                 $('.alert-success').fadeOut(3000);
                 $('.form-control').val('');
@@ -326,7 +361,12 @@ function sendmail() {
             data: {
                 _token: "{{csrf_token()}}",
             },
-            context: document.body
+            context: document.body,
+            statusCode: {
+                401: function(xhr) {
+                    logout();
+                }
+            }
         }).done(function (data) {
             $('#content').html(data);
             $('.logo').css("background-image", "none");
@@ -345,7 +385,12 @@ function sendmail() {
                 _token: "{{csrf_token()}}",
                 azonosito: $('#carselect option:selected').val()
             },
-            context: document.body
+            context: document.body,
+            statusCode: {
+                401: function(xhr) {
+                    logout();
+                }
+            }
         }).done(function (data) {
             data = JSON.parse(data);
             if (data.success) {
@@ -362,7 +407,12 @@ function sendmail() {
             data: {
                 _token: "{{csrf_token()}}",
             },
-            context: document.body
+            context: document.body,
+            statusCode: {
+                401: function(xhr) {
+                    logout();
+                }
+            }
         }).done(function (data) {
             $('#content').html(data);
             $('.logo').css("background-image", "none");
@@ -370,11 +420,12 @@ function sendmail() {
             visibleCheck();
             $('#menu-title').text('Szervízlap rörgzítése');
 
-            $('#footer').html( $(".save-btn").clone());
+            $('#footer').html($(".save-btn").clone());
             $(".save-btn").first().remove();
             $('#nev').focus();
         });
     }
+
     function hiba() {
         $.ajax({
             url: "{{route('service.hiba')}}?id={{env('ASSET_FLAG')}}",
@@ -382,7 +433,12 @@ function sendmail() {
             data: {
                 _token: "{{csrf_token()}}",
             },
-            context: document.body
+            context: document.body,
+            statusCode: {
+                401: function(xhr) {
+                    logout();
+                }
+            }
         }).done(function (data) {
             $('#content').html(data);
             $('.logo').css("background-image", "none");
@@ -390,7 +446,7 @@ function sendmail() {
             visibleCheck();
             $('#menu-title').text('Hibajegy rörgzítése');
 
-            $('#footer').html( $(".save-btn").clone());
+            $('#footer').html($(".save-btn").clone());
             $(".save-btn").first().remove();
             $('#km_ora').focus();
         });
@@ -403,7 +459,12 @@ function sendmail() {
             data: {
                 _token: "{{csrf_token()}}",
             },
-            context: document.body
+            context: document.body,
+            statusCode: {
+                401: function(xhr) {
+                    logout();
+                }
+            }
         }).done(function (data) {
             $('#content').html(data);
             $('.logo').css("background-image", "none");
@@ -420,7 +481,12 @@ function sendmail() {
             data: {
                 _token: "{{csrf_token()}}",
             },
-            context: document.body
+            context: document.body,
+            statusCode: {
+                401: function(xhr) {
+                    logout();
+                }
+            }
         }).done(function (data) {
             $('#content').html(data);
             $('.logo').css("background-image", "none");
@@ -437,7 +503,12 @@ function sendmail() {
             data: {
                 _token: "{{csrf_token()}}",
             },
-            context: document.body
+            context: document.body,
+            statusCode: {
+                401: function(xhr) {
+                    logout();
+                }
+            }
         }).done(function (data) {
             $('#content').html(data);
             $('.logo').css("background-image", "none");

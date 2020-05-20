@@ -8,18 +8,18 @@
 
 
                 <div class="md-form">
-                    <input type="number" autofocus  id="km_ora" class="form-control">
-                    <label for="km_ora" class="always-focus"><strong class="text-danger">*</strong> Km óra (<i class="km"> Minimum: {{number_format($minkm, 0,",", " ")}} </i>)</label>
+                    <input type="number"  inputmode="numeric" pattern="[0-9]*" autofocus  id="km_ora" class="form-control">
+                    <label for="km_ora" onclick="$(this).toggleClass('active')" class="always-focus"><strong class="text-danger">*</strong> Km óra (<i class="km"> Minimum: {{number_format($minkm, 0,",", " ")}} </i>)</label>
                 </div>
 
                 <div class="md-form">
                     <textarea id="leiras" autofocus  class="md-textarea form-control" rows="9"></textarea>
-                    <label for="leiras">Leírás</label>
+                    <label for="leiras" onclick="$(this).toggleClass('active')">Leírás</label>
                 </div>
 
 
                 <!-- Sign in button -->
-                <button class="btn blue-gradient  btn-block my-4 waves-effect z-depth-0 save-btn" style="border-radius: 30px" onclick="posthiba()" type="button">Mentés</button>
+                <button class="btn blue-gradient  btn-block waves-effect z-depth-0 save-btn" style="border-radius: 30px" onclick="posthiba()" type="button">Mentés</button>
                 <div class="alert-success p-2" style="display: none; border-radius: 30px">Sikeres mentés!</div>
 
 
